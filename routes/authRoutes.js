@@ -4,6 +4,8 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 const router = express.Router();
+
+require("dotenv").config();
 const JWT_SECRET = process.env.JWT_SECRET || "your_jwt_secret"; // Use .env for security
 
 // Default test users (plaintext passwords for testing)
@@ -16,15 +18,6 @@ const defaultUsers = [
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login attempt:", email, password); // Debug log
-
-    // Check against default test users first
-    // const testUser = defaultUsers.find((user) => user.email === email);
-    // if (testUser && testUser.password === password) {
-    //   console.log("Test user login successful");
-    //   const token = jwt.sign({ email, role: testUser.role }, JWT_SECRET, { expiresIn: "1h" });
-    //   return res.json({ token, role: testUser.role });
-    // }
 
     // Check in the database
     const user = await User.findOne({ email });
@@ -32,19 +25,13 @@ router.post("/login", async (req, res) => {
       console.log("User not found");
       return res.status(400).json({ message: "Invalid credentials" });
     }
-    console.log(user);
-    console.log("Stored hash in DB:", user.password);
-
-    // Verify using bcrypt
-    console.log(password, user.password);
+    console.log(user);        
     const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Password match status:", isMatch);
-
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
-
     // Generate JWT token
+    console.log(JWT_SECRET)
     const token = jwt.sign({ id: user._id, role: user.role }, JWT_SECRET, { expiresIn: "1h" });
     res.json({ token, role: user.role });
 

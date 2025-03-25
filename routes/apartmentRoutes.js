@@ -1,6 +1,6 @@
 const express = require('express');
 const Apartment = require('../models/Apartment');
-const Society = require('../models/Society'); // ✅ Added Society model
+const Society = require('../models/Society'); // Society model
 const { authMiddleware, adminOnly } = require('../middleware/authMiddleware');
 const router = express.Router();
 

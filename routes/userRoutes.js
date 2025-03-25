@@ -3,7 +3,7 @@ const User = require('../models/User');
 const { authMiddleware, adminOnly } = require('../middleware/authMiddleware'); // ✅ Updated import
 const router = express.Router();
 
-// ✅ Get all users (Admins Only)
+// Get all users (Admins Only)
 router.get('/', authMiddleware, adminOnly, async (req, res) => {
   try {
     const users = await User.find();

@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 
+// Define Society Schema
 const societySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   address: { type: String, required: true },
@@ -15,7 +16,7 @@ const societySchema = new mongoose.Schema({
     Security: { type: Boolean, default: false },
     Pool: { type: Boolean, default: false },
   },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }, // Admin who created it
-}, { timestamps: true });
+  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }, // Admin who created the society
+}, { timestamps: true }); // Automatically add createdAt and updatedAt fields
 
 module.exports = mongoose.model('Society', societySchema);
