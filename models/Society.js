@@ -1,14 +1,26 @@
 const mongoose = require('mongoose');
 
-// Define Society Schema
 const societySchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
   address: { type: String, required: true },
-  location: { type: String }, // Google Maps URL
+  location: { type: String }, 
+  coordinates: {
+    latitude: { type: Number },
+    longitude: { type: Number }
+  },
   rooms: {
-    "1BHK": { count: { type: Number, default: 0 }, price: { type: Number, default: 0 } },
-    "2BHK": { count: { type: Number, default: 0 }, price: { type: Number, default: 0 } },
-    "3BHK": { count: { type: Number, default: 0 }, price: { type: Number, default: 0 } },
+    "1BHK": { 
+      count: { type: Number, default: 0 }, 
+      price: { type: Number, default: 0 } 
+    },
+    "2BHK": { 
+      count: { type: Number, default: 0 }, 
+      price: { type: Number, default: 0 } 
+    },
+    "3BHK": { 
+      count: { type: Number, default: 0 }, 
+      price: { type: Number, default: 0 } 
+    },
   },
   facilities: {
     Parking: { type: Boolean, default: false },
@@ -16,7 +28,11 @@ const societySchema = new mongoose.Schema({
     Security: { type: Boolean, default: false },
     Pool: { type: Boolean, default: false },
   },
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'users' }, // Admin who created the society
-}, { timestamps: true }); // Automatically add createdAt and updatedAt fields
+  createdBy: { 
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'users' 
+  },
+  isDeleted: { type: Boolean, default: false }
+}, { timestamps: true });
 
 module.exports = mongoose.model('Society', societySchema);
