@@ -1,6 +1,6 @@
 const express = require('express');
 const User = require('../models/User');
-const { authMiddleware, adminOnly } = require('../middleware/authMiddleware'); // ✅ Updated import
+const { authMiddleware, adminOnly } = require('../middleware/authMiddleware'); // Updated import
 const router = express.Router();
 
 // Get all users (Admins Only)
