@@ -4,7 +4,7 @@ const Society = require("../models/Society");
 const { authMiddleware, adminOnly } = require("../middleware/authMiddleware");
 const router = express.Router();
 
-// Fetch apartments by society ID
+
 router.get("/society/:societyId", authMiddleware, async (req, res) => {
   try {
     const apartments = await Apartment.find({ societyId: req.params.societyId });
@@ -14,7 +14,7 @@ router.get("/society/:societyId", authMiddleware, async (req, res) => {
   }
 });
 
-// Add a new apartment under a specific society
+
 router.post("/add", authMiddleware, async (req, res) => {
   const { 
     societyId, 
@@ -28,13 +28,11 @@ router.post("/add", authMiddleware, async (req, res) => {
   } = req.body;
 
   try {
-    // Verify society exists
     const society = await Society.findById(societyId);
     if (!society) {
       return res.status(404).json({ message: "Society not found" });
     }
 
-    // Create new apartment
     const newApartment = new Apartment({
       societyId,
       name,
@@ -46,7 +44,6 @@ router.post("/add", authMiddleware, async (req, res) => {
       ownerDetails: status === 'Occupied' ? ownerDetails : {}
     });
 
-    // Save apartment
     await newApartment.save();
 
     res.status(201).json(newApartment);
@@ -59,7 +56,6 @@ router.post("/add", authMiddleware, async (req, res) => {
   }
 });
 
-// Update apartment details
 router.put("/:id", authMiddleware, adminOnly, async (req, res) => {
   const { id } = req.params;
   const { 
