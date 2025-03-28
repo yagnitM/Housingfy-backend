@@ -11,9 +11,12 @@ const societyRoutes = require('./routes/societyRoutes');
 dotenv.config();
 const app = express();
 
-
+// CORS Configuration (Update frontend URL if deployed)
 const corsOptions = {
-  origin: ['http://localhost:5173'],
+  origin: [
+    'http://localhost:5173', // Local frontend
+    'https://housingfy-frontend.onrender.com' // Replace with actual deployed frontend URL
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true, 
@@ -22,13 +25,18 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json()); 
 
-//Routes
+// Root Route (Fixes "Cannot GET /" issue)
+app.get("/", (req, res) => {
+  res.send("Housingfy Backend is Running Successfully!");
+});
+
+// API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/apartments', apartmentRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/societies', societyRoutes); 
 
-//MongoDB Connection
+// MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch(err => {
@@ -42,7 +50,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal Server Error" });
 });
 
-//Start Server
+// Start Server
 const PORT = process.env.PORT || 6060;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
