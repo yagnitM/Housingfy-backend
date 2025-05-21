@@ -15,7 +15,7 @@ const app = express();
 const corsOptions = {
   origin: [
     'http://localhost:5173', // Local frontend
-    'https://housingfy-frontend.onrender.com' // Replace with actual deployed frontend URL
+    'https://yagnitm.github.io' // Replace with actual deployed frontend URL
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   allowedHeaders: ['Content-Type', 'Authorization'],
