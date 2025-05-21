@@ -13,8 +13,7 @@ const app = express();
 
 // CORS Configuration (Update frontend URL if deployed)
 const corsOptions = {
-  origin: [
-    'http://localhost:5173', // Local frontend
+  origin: [ // Local frontend
     'https://yagnitm.github.io' // Replace with actual deployed frontend URL
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
